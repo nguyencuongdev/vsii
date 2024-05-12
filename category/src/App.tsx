@@ -1,6 +1,7 @@
 import React from "react";
 import CategoryList from "./CategoryList";
 import "./App.css";
+import ValidateImg from "./ValidateImg";
 
 const categories = [
   {
@@ -96,7 +97,8 @@ function App() {
   return (
     <div className="App">
       <div className="sidebar">
-        <CategoryList data={categories} />
+        {/* <CategoryList data={categories} /> */}
+        <ValidateImg />
       </div>
     </div>
   );
