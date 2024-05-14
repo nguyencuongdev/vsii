@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 
 type CategoryProps = {
+  id: number;
   name: string;
-  subCategories: CategoryProps[] | null;
+  subCategories: CategoryProps[] | [];
+  icon: string;
 };
 
 type CategoryListProps = {
@@ -10,15 +12,17 @@ type CategoryListProps = {
 };
 
 const CategoryList = ({ data }: CategoryListProps) => {
-  const [activeCategory, setActiveCategory] = useState<string | null>(null);
+  const [activeCategorie, setActiveCategorie] = useState<number>(0);
 
-  const toggleSubCategories = (categoryName: string) => {
-    setActiveCategory(activeCategory === categoryName ? null : categoryName);
+  const handleShowSubCategories = (idCategory: number) => {
+    idCategory === activeCategorie
+      ? setActiveCategorie(0)
+      : setActiveCategorie(idCategory);
   };
 
   useEffect(() => {
     const closeSubCategories = () => {
-      setActiveCategory(null);
+      setActiveCategorie(0);
     };
 
     document.addEventListener("click", closeSubCategories);
@@ -28,25 +32,40 @@ const CategoryList = ({ data }: CategoryListProps) => {
     };
   }, []);
 
+  const handleCategoryClick = (
+    e: React.MouseEvent,
+    category: CategoryProps
+  ) => {
+    e.stopPropagation();
+    if (category.subCategories.length) {
+      handleShowSubCategories(category.id);
+    } else {
+      console.log("linked to category");
+    }
+  };
+
   return (
     <ul>
-      {data.map((category, index) => (
-        <div key={index} className="category">
-          <li
-            onClick={(e) => {
-              e.stopPropagation();
-              const eTarget = e.target as HTMLLIElement;
-              console.log(eTarget.textContent);
-              toggleSubCategories(category.name);
-            }}
-          >
+      {data.map((category) => (
+        <div key={category.id} className="category">
+          <li onClick={(e) => handleCategoryClick(e, category)}>
+            <img
+              src={category.icon}
+              alt="icon"
+              width="24px"
+              height="24px"
+              style={{
+                marginRight: "4px",
+              }}
+            />
             {category.name}
           </li>
-          {activeCategory === category.name && category.subCategories && (
-            <div className="category-children">
-              <CategoryList data={category.subCategories} />
-            </div>
-          )}
+          {activeCategorie === category.id &&
+            category.subCategories.length > 0 && (
+              <div className="category-children">
+                <CategoryList data={category.subCategories} />
+              </div>
+            )}
         </div>
       ))}
     </ul>
