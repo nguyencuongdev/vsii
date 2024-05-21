@@ -7,7 +7,16 @@ describe("Test form sign up", () => {
   test("renders form correctly", () => {
     // Hiển thị component FormSignup
     render(<FormSignup />);
-    // Kiểm tra xem có button submit trên form không?
+    // Kiểm tra xem các trường input, button submit có trên form không?
+    expect(
+      screen.getByLabelText("Name:", { selector: "input" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByLabelText("Email:", { selector: "input" })
+    ).toBeInTheDocument();
+    expect(
+      screen.getByLabelText("Age:", { selector: "input" })
+    ).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "Sign up" })).toBeInTheDocument();
   });
 
@@ -40,9 +49,9 @@ describe("Test form sign up", () => {
     const ageInput = screen.getByLabelText("Age:", { selector: "input" });
 
     // Mô tả sự kiện người dùng change giá trị trong các trường input
-    userEvent.type(nameInput, "John Doe");
-    userEvent.type(emailInput, "johndoe.com");
-    userEvent.type(ageInput, "100");
+    userEvent.type(nameInput, "cuong");
+    userEvent.type(emailInput, "cuong29329.com");
+    userEvent.type(ageInput, "16");
 
     // Mô tả sự kiện người dùng click vào button submit form
     userEvent.click(submitButton);
@@ -69,8 +78,8 @@ describe("Test form sign up", () => {
     const ageInput = screen.getByLabelText("Age:", { selector: "input" });
 
     // Mô tả sự kiện người dùng change giá trị trong các trường input
-    userEvent.type(nameInput, "John Doe");
-    userEvent.type(emailInput, "johndoe@example.com");
+    userEvent.type(nameInput, "Cuong");
+    userEvent.type(emailInput, "cuong232@gmail.com");
     userEvent.type(ageInput, "30");
 
     // Mô tả sự kiện người dùng click vào button submit form
