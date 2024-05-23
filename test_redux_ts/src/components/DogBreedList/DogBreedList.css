@@ -1,0 +1,20 @@
+.dogbreedList {
+  max-width: 100vw;
+  overflow-x: auto;
+  padding: 24px;
+}
+
+th {
+  text-align: cneter;
+}
+th,
+tr,
+td {
+  white-space: nowrap;
+}
+td.td-description {
+  max-width: 400px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
